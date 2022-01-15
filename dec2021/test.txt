@@ -1,1 +1,28 @@
 test on create directory
+CREATE OR REPLACE VIEW "V_CC_REF_LISTVALUE" ("REF_TYPE", "REF_VAL", "REF_LABEL") AS
+select 'countryCodeType', country_code, country_name from cc_country
+union all
+select 'stateCodeType', country_code || state_id as state_ccid, state_name from cc_state
+union all
+select 'ccSpecialListType', 'ignore_name' as list_type, 'ignore_name' as list_type_name from dual
+union all
+select 'ccSpecialListType', 'boundary_word' as list_type, 'boundary_word' as list_type_name from dual
+union all
+select 'ccSpecialListType', 'common_place_name' as list_type, 'common_place_name' as list_type_name from dual
+;
+
+SELECT s.LIST_ID,s.LIST_TYPE,s.LIST_NAME FROM CC_SPECIAL_LIST s  where LIST_ID = 7000424;
+
+select * from cc_special_list;
+
+
+CREATE TABLE cc_special_list (
+                            list_Id NUMBER,
+                            list_type varchar2(20),  ---ignore word, boundary list, or special cities/state/country
+                            list_name  varchar2(128)
+);
+ALTER TABLE cc_special_list
+    add CONSTRAINT cc_special_list_pk PRIMARY KEY (list_Id);
+
+
+SELECT * from global_name;
